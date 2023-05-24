@@ -12,6 +12,9 @@ const cars=[{
     id:3,
     name:"Mercedes"
 
+},{
+    id:4,
+    name:'Pagani'
 }]
 //middelware
 app.use((req,res,next)=>{
@@ -45,6 +48,14 @@ app.get('/m',(req,res)=>{
     },
 )
 })
+app.get('/p',(req,res)=>{
+    res.send({
+        id:4,
+        name:'Pagani'
+    },
+)
+})
+
 app.use((express.json()));//inbuilt middleware
 app.post('/cars',(req,res)=>{
     if(!req.body.name){
@@ -57,6 +68,10 @@ app.post('/cars',(req,res)=>{
      id:cars.length
     }
     cars.push(new_car);
+    res.json(new_car);
+})
+app.get('/cars',(req,res)=>{
+    res.send(cars)
 })
 app.listen(PORT,()=>{
     console.log(`listening on ${PORT}`)
