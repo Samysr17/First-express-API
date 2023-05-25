@@ -1,4 +1,5 @@
 const express=require('express')
+const carscontroller=require('./controllers/cars.controllers')
 const app=express()
 const PORT=3000
 const cars=[{
@@ -24,16 +25,7 @@ app.use((req,res,next)=>{
     console.log(`${req.url},${req.method},${delta}`)
     
 })
-app.get('/cars/:carid',(req,res)=>{
-    const carid=Number(req.params.carid);
-    const car=cars[carid]
-    if(car){
-        res.json(car)
-    }else{
-        res.json("Error not found")
-    }
-    
-})
+app.get('/cars/:carid',carscontroller.getcar)
 app.get('/',(req,res)=>{
     res.send({
         id:1,
@@ -57,22 +49,8 @@ app.get('/p',(req,res)=>{
 })
 
 app.use((express.json()));//inbuilt middleware
-app.post('/cars',(req,res)=>{
-    if(!req.body.name){
-        res.status(400).json({
-            error:"Bad Request"
-        })
-    }
-    const new_car={
-     name:req.body.name,
-     id:cars.length
-    }
-    cars.push(new_car);
-    res.json(new_car);
-})
-app.get('/cars',(req,res)=>{
-    res.send(cars)
-})
+app.post('/cars',carscontroller.postcars)
+app.get('/cars',carscontroller.getcars)
 app.listen(PORT,()=>{
     console.log(`listening on ${PORT}`)
 })
