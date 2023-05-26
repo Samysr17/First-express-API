@@ -1,3 +1,4 @@
+const model=require('../models/models.cars')
 function postcars(req,res){
     if(!req.body.name){
         res.status(400).json({
@@ -6,17 +7,17 @@ function postcars(req,res){
     }
     const new_car={
      name:req.body.name,
-     id:cars.length
+     id:model.length
     }
-    cars.push(new_car);
+    model.push(new_car);
     res.json(new_car);
 }
 function getcars(req,res){
-    res.send(cars)
+    res.send(model)
 }
 function getcar(req,res){
     const carid=Number(req.params.carid);
-    const car=cars[carid]
+    const car=model[carid]
     if(car){
         res.json(car)
     }else{
