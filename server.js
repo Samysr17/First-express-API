@@ -1,22 +1,9 @@
 const express=require('express')
+const path=require('path');
 const carscontroller=require('./controllers/cars.controllers')
 const app=express()
 const PORT=3000
-const cars=[{
-    id:1,
-    name:"Ferarri"
-},
-{
-    id:2,
-    name:"Redbull"
-},{
-    id:3,
-    name:"Mercedes"
 
-},{
-    id:4,
-    name:'Pagani'
-}]
 //middelware
 app.use((req,res,next)=>{
     const start=Date.now()
@@ -47,6 +34,7 @@ app.get('/p',(req,res)=>{
     },
 )
 })
+app.use('/frontend',express.static(path.join(__dirname,'public')))
 
 app.use((express.json()));//inbuilt middleware
 app.post('/cars',carscontroller.postcars)
